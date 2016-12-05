@@ -1,0 +1,12 @@
+# test01
+FILE(GLOB src_files "*.*")
+
+SET (ALL_SRCS ${src_files})
+ADD_EXECUTABLE (test01 ${ALL_SRCS})
+
+TARGET_LINK_LIBRARIES (test01 ${LIB_UV} )
+
+SET_TARGET_PROPERTIES(test01 PROPERTIES FOLDER "Apps/")
+
+
+INSTALL_TARGETS (/bin test01)

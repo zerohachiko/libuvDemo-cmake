@@ -1,0 +1,52 @@
+cmake_minimum_required(VERSION 2.6)
+#
+# Set the project name.
+#
+IF(WIN32)
+   SET(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/install" CACHE PATH "Installation Directory")
+   MESSAGE(STATUS "WIN32")
+ELSE()
+   SET(CMAKE_INSTALL_PREFIX "/usr/local" CACHE PATH "Installation Directory")
+ENDIF()
+
+PROJECT (libuv-test01)
+
+SET (EXECUTABLE_OUTPUT_PATH  ${PROJECT_BINARY_DIR}/bin CACHE INTERNAL
+  "Where to put the executables")
+
+SET (LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib CACHE INTERNAL
+  "Where to put the libraries")
+  
+IF(WIN32)
+   SET (VAC_DEBUG_PREFIX "_d") 
+ELSE()
+   SET (VAC_DEBUG_PREFIX "") 
+ENDIF()
+
+SUBDIRS ( 
+  Apps 
+  )
+
+# Open the property setting
+SET_PROPERTY(GLOBAL PROPERTY USE_FOLDERS ON)
+SET_PROPERTY(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER "CMakeTargets")
+
+
+FIND_PACKAGE(OpenCV REQUIRED)
+INCLUDE_DIRECTORIES(${OpenCV_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES(${PROJECT_BINARY_DIR})
+
+
+IF (WIN32)
+   INCLUDE_DIRECTORIES (${PROJECT_SOURCE_DIR}/ExtLibs/libuv/include)
+   LINK_DIRECTORIES (${PROJECT_SOURCE_DIR}/ExtLibs/libuv/lib_x64)
+   SET (LIB_UV "libuv")
+ELSE ()
+   SET (LIB_UV "")
+ENDIF ()
+
+
+
+
+ 
+  
